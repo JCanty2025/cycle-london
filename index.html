@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f0f0f">
+<meta name="theme-color" content="#f5f0e8">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cycle London">
@@ -18,21 +18,21 @@
 <style>
 /* ─── CSS Variables ─────────────────────────────────────────────── */
 :root {
-  --bg:        #0f0f0f;
-  --bg2:       #141414;
-  --card:      #1a1a1a;
-  --card2:     #1f1f1f;
-  --border:    #2a2a2a;
-  --border2:   #333;
-  --text:      #f0ede8;
-  --muted:     #888;
-  --muted2:    #555;
-  --gold:      #c9a84c;
-  --gold2:     #e6c870;
-  --gold-dim:  rgba(201,168,76,0.12);
-  --blue:      #4a9eff;
-  --green:     #5cb85c;
-  --red:       #e05a5a;
+  --bg:        #f5f0e8;
+  --bg2:       #ede8df;
+  --card:      #ffffff;
+  --card2:     #faf7f2;
+  --border:    #ddd8ce;
+  --border2:   #ccc6bb;
+  --text:      #1a1612;
+  --muted:     #7a7168;
+  --muted2:    #b0a99e;
+  --gold:      #a8782a;
+  --gold2:     #c99a3e;
+  --gold-dim:  rgba(168,120,42,0.10);
+  --blue:      #2970c9;
+  --green:     #2e8a4a;
+  --red:       #c0392b;
   --radius:    14px;
   --radius-sm: 8px;
   --safe-top:  env(safe-area-inset-top, 0px);
@@ -66,13 +66,13 @@ body {
 .splash-bg {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(168,120,42,0.10) 0%, transparent 70%);
   pointer-events: none;
 }
 .splash-ring {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(201,168,76,0.08);
+  border: 1px solid rgba(168,120,42,0.12);
   animation: ring-pulse 4s ease-in-out infinite;
 }
 .splash-ring:nth-child(1) { width: 300px; height: 300px; animation-delay: 0s; }
@@ -88,7 +88,7 @@ body {
   padding: 40px 32px;
   animation: fade-up 1s ease both;
 }
-.splash-icon { font-size: 56px; margin-bottom: 24px; filter: drop-shadow(0 0 24px rgba(201,168,76,0.4)); }
+.splash-icon { font-size: 56px; margin-bottom: 24px; filter: drop-shadow(0 0 24px rgba(168,120,42,0.3)); }
 .splash-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(36px, 8vw, 52px);
@@ -129,7 +129,7 @@ body {
   margin: 0 auto 16px;
   padding: 18px 32px;
   background: var(--gold);
-  color: #0f0f0f;
+  color: #fff;
   border: none;
   border-radius: 50px;
   font-family: 'DM Sans', sans-serif;
@@ -138,9 +138,9 @@ body {
   letter-spacing: 0.03em;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-  box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+  box-shadow: 0 8px 32px rgba(168,120,42,0.25);
 }
-.btn-start:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(201,168,76,0.4); }
+.btn-start:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(168,120,42,0.35); }
 .btn-start:active { transform: translateY(0); }
 .btn-install {
   display: none;
@@ -165,9 +165,13 @@ body {
 /* Map */
 #map {
   position: relative;
-  flex: 0 0 42vh;
-  min-height: 220px;
+  flex: 0 0 46vh;
+  min-height: 240px;
   z-index: 1;
+  transition: flex-basis 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+#map.map-fullscreen {
+  flex: 0 0 100vh;
 }
 #map-overlay {
   position: absolute;
@@ -194,7 +198,7 @@ body {
 }
 .tour-logo {
   pointer-events: all;
-  background: rgba(15,15,15,0.85);
+  background: rgba(245,240,232,0.90);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
@@ -206,12 +210,13 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px;
   letter-spacing: 0.02em;
+  color: var(--text);
 }
 .tour-logo-icon { font-size: 16px; }
 .tour-logo-gold { color: var(--gold); }
 .tour-menu-btn {
   pointer-events: all;
-  background: rgba(15,15,15,0.85);
+  background: rgba(245,240,232,0.90);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
@@ -221,17 +226,91 @@ body {
   cursor: pointer;
   font-size: 18px;
   transition: border-color 0.2s;
+  color: var(--text);
 }
 .tour-menu-btn:hover { border-color: var(--gold); }
 
-/* GPS Pill */
+/* ─── Map Control Buttons ────────────────────────────────────────── */
+#map-controls {
+  position: absolute;
+  bottom: 70px;
+  right: 14px;
+  z-index: 850;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.map-ctrl-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(245,240,232,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.map-ctrl-btn:hover { border-color: var(--gold); color: var(--gold); transform: scale(1.08); }
+.map-ctrl-btn.active { border-color: var(--blue); color: var(--blue); }
+.map-ctrl-btn.nav-active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+/* Direction arrow overlay on map */
+#direction-arrow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  z-index: 820;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 28px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+#direction-arrow.visible { opacity: 1; }
+
+/* Navigate to next stop card */
+#nav-to-next {
+  display: none;
+  margin: 0 16px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+#nav-to-next.show { display: block; }
+.nav-row {
+  display: flex;
+  gap: 8px;
+  margin: 12px 16px 0;
+}
+.btn-nav-maps {
+  flex: 1;
+  padding: 13px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+  white-space: nowrap;
+  min-width: 0;
+}
+.btn-nav-maps:hover { border-color: var(--blue); color: var(--blue); background: rgba(74,158,255,0.07); }
+.btn-nav-maps.google { border-color: rgba(74,158,255,0.3); }
+
+/* Heading indicator in GPS pill */
 #gps-pill {
   position: absolute;
   bottom: 70px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 850;
-  background: rgba(15,15,15,0.9);
+  background: rgba(245,240,232,0.92);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: 50px;
@@ -243,7 +322,7 @@ body {
   pointer-events: none;
 }
 #gps-pill.active { border-color: var(--green); color: var(--green); }
-#gps-pill.arrived { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.12); }
+#gps-pill.arrived { border-color: var(--gold); color: var(--gold); background: rgba(168,120,42,0.08); }
 
 /* Content scroll area */
 #tour-content {
@@ -300,10 +379,10 @@ body {
 }
 .stop-card.current { border-color: var(--gold); }
 .stop-card.visited { border-color: var(--muted2); opacity: 0.75; }
-.stop-card.arrived { border-color: var(--gold); box-shadow: 0 0 24px rgba(201,168,76,0.15); animation: arrived-glow 2s ease-in-out infinite; }
+.stop-card.arrived { border-color: var(--gold); box-shadow: 0 0 24px rgba(168,120,42,0.15); animation: arrived-glow 2s ease-in-out infinite; }
 @keyframes arrived-glow {
-  0%, 100% { box-shadow: 0 0 16px rgba(201,168,76,0.1); }
-  50% { box-shadow: 0 0 32px rgba(201,168,76,0.25); }
+  0%, 100% { box-shadow: 0 0 16px rgba(168,120,42,0.10); }
+  50% { box-shadow: 0 0 32px rgba(168,120,42,0.22); }
 }
 .stop-header {
   padding: 14px 16px;
@@ -361,12 +440,12 @@ body {
   align-items: center;
   gap: 10px;
   background: var(--gold-dim);
-  border: 1px solid rgba(201,168,76,0.3);
+  border: 1px solid rgba(168,120,42,0.25);
   border-radius: var(--radius-sm);
   padding: 12px 14px;
   margin-bottom: 14px;
   font-size: 14px;
-  color: var(--gold2);
+  color: var(--gold);
 }
 .arrived-banner.show { display: flex; }
 
@@ -457,7 +536,7 @@ body {
 .route-seg-item span:last-child { color: var(--text); }
 
 /* Action buttons */
-.stop-actions { display: flex; gap: 8px; }
+.stop-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .btn-action {
   flex: 1; padding: 12px 8px;
   border: 1px solid var(--border); border-radius: var(--radius-sm);
@@ -467,16 +546,18 @@ body {
   text-align: center;
 }
 .btn-action:hover { border-color: var(--gold); color: var(--gold); }
-.btn-action.primary { background: var(--gold); border-color: var(--gold); color: #0f0f0f; font-weight: 500; }
+.btn-action.primary { background: var(--gold); border-color: var(--gold); color: #fff; font-weight: 500; }
 .btn-action.primary:hover { background: var(--gold2); border-color: var(--gold2); }
 .btn-action.visited-btn { background: var(--muted2); border-color: var(--muted2); color: var(--text); opacity: 0.7; cursor: default; }
+.btn-action.nav-btn { border-color: rgba(74,158,255,0.35); color: var(--blue); }
+.btn-action.nav-btn:hover { background: rgba(74,158,255,0.1); border-color: var(--blue); }
 
 /* ─── BOTTOM NAV ─────────────────────────────────────────────────── */
 #bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
   height: calc(64px + var(--safe-bot));
-  background: rgba(15,15,15,0.92);
+  background: rgba(245,240,232,0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--border);
@@ -623,46 +704,62 @@ body {
 }
 .btn-share:hover { background: var(--gold2); transform: translateY(-2px); }
 
-/* ─── Map control buttons ────────────────────────────────────────── */
-#map-controls {
-  position: absolute;
-  bottom: 70px;
-  right: 12px;
-  z-index: 850;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.map-ctrl-btn {
-  width: 42px; height: 42px;
-  border-radius: 50%;
+/* ─── Intro Audio Player (splash) ───────────────────────────────── */
+.intro-audio-wrap {
+  margin: 0 auto 24px;
+  max-width: 280px;
+  background: var(--card);
   border: 1px solid var(--border);
-  background: rgba(15,15,15,0.9);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--text);
-  font-size: 18px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
 }
-.map-ctrl-btn:hover { border-color: var(--gold); }
-.map-ctrl-btn.active { border-color: var(--gold); background: rgba(201,168,76,0.18); }
-
-/* Navigate button inside stop card */
-.btn-navigate {
-  flex: 1; padding: 12px 8px;
-  border: 1px solid rgba(74,158,255,0.4); border-radius: var(--radius-sm);
-  background: rgba(74,158,255,0.08); color: var(--blue);
-  font-family: 'DM Sans', sans-serif; font-size: 13px;
-  cursor: pointer; transition: border-color 0.2s, background 0.2s;
+.intro-audio-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
   text-align: center;
-  display: flex; align-items: center; justify-content: center; gap: 5px;
 }
-.btn-navigate:hover { border-color: var(--blue); background: rgba(74,158,255,0.15); }
-
-/* ─── GPS Start floating button ──────────────────────────────────── */
+.intro-audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.intro-play-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: none;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  color: #fff;
+  flex-shrink: 0;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 3px 12px rgba(168,120,42,0.25);
+}
+.intro-play-btn:hover { background: var(--gold2); transform: scale(1.07); }
+.intro-audio-right { flex: 1; min-width: 0; }
+.intro-audio-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 6px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.intro-prog-wrap {
+  position: relative; height: 4px;
+  background: var(--border); border-radius: 10px; cursor: pointer;
+  margin-bottom: 4px;
+}
+.intro-prog-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--gold); border-radius: 10px;
+  transition: width 0.2s; pointer-events: none; width: 0%;
+}
+.intro-audio-time { font-size: 11px; color: var(--muted); }
 #gps-start-fab {
   position: fixed;
   bottom: calc(72px + var(--safe-bot) + 12px);
@@ -672,18 +769,18 @@ body {
   border: none;
   border-radius: 50px;
   padding: 14px 20px;
-  color: #0f0f0f;
+  color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 500;
   cursor: pointer;
   display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 6px 24px rgba(201,168,76,0.35);
+  box-shadow: 0 6px 24px rgba(168,120,42,0.30);
   transition: transform 0.2s, background 0.2s;
   animation: fab-pulse 3s ease-in-out infinite;
 }
 @keyframes fab-pulse {
-  0%, 100% { box-shadow: 0 6px 24px rgba(201,168,76,0.35); }
-  50% { box-shadow: 0 8px 32px rgba(201,168,76,0.5); }
+  0%, 100% { box-shadow: 0 6px 24px rgba(168,120,42,0.30); }
+  50% { box-shadow: 0 8px 32px rgba(168,120,42,0.45); }
 }
 #gps-start-fab.hidden { display: none; }
 #gps-start-fab:hover { background: var(--gold2); transform: translateY(-2px); }
@@ -727,17 +824,18 @@ body {
   top: calc(var(--safe-top) + 80px);
   left: 50%; transform: translateX(-50%) translateY(-20px);
   z-index: 9999;
-  background: rgba(26,26,26,0.95);
+  background: rgba(255,255,255,0.97);
   border: 1px solid var(--gold);
   border-radius: 50px;
   padding: 12px 24px;
-  font-size: 14px; color: var(--gold2);
+  font-size: 14px; color: var(--gold);
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
   pointer-events: none;
   white-space: nowrap;
   max-width: 90vw; text-align: center;
   white-space: normal;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -753,10 +851,10 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 
 /* Leaflet overrides */
-.leaflet-container { background: #1a1a1a; }
-.leaflet-control-zoom a { background: rgba(26,26,26,0.9) !important; color: var(--text) !important; border-color: var(--border) !important; }
-.leaflet-control-zoom a:hover { background: rgba(40,40,40,0.95) !important; }
-.leaflet-popup-content-wrapper { background: var(--card) !important; color: var(--text) !important; border: 1px solid var(--border) !important; box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important; border-radius: var(--radius-sm) !important; }
+.leaflet-container { background: #e8e4dc; }
+.leaflet-control-zoom a { background: rgba(245,240,232,0.95) !important; color: var(--text) !important; border-color: var(--border) !important; }
+.leaflet-control-zoom a:hover { background: #fff !important; }
+.leaflet-popup-content-wrapper { background: var(--card) !important; color: var(--text) !important; border: 1px solid var(--border) !important; box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important; border-radius: var(--radius-sm) !important; }
 .leaflet-popup-tip { background: var(--card) !important; }
 </style>
 </head>
@@ -786,6 +884,22 @@ body {
         <div class="splash-stat-l">Tour</div>
       </div>
     </div>
+
+    <!-- Intro audio -->
+    <div class="intro-audio-wrap">
+      <div class="intro-audio-label">🎙 Welcome Introduction</div>
+      <div class="intro-audio-controls">
+        <button class="intro-play-btn" id="intro-play-btn" onclick="toggleIntroAudio()">▶</button>
+        <div class="intro-audio-right">
+          <div class="intro-audio-title">Cycle London with Jonah</div>
+          <div class="intro-prog-wrap" id="intro-prog-wrap" onclick="seekIntroAudio(event)">
+            <div class="intro-prog-fill" id="intro-prog-fill"></div>
+          </div>
+          <span class="intro-audio-time" id="intro-audio-time">0:00</span>
+        </div>
+      </div>
+    </div>
+
     <button class="btn-start" onclick="startTour()">Begin Tour →</button>
     <button class="btn-install" id="install-btn" onclick="installApp()">⊕ Install App</button>
   </div>
@@ -805,11 +919,11 @@ body {
       <button class="tour-menu-btn" onclick="showNav('stats')">⚙</button>
     </div>
     <div id="gps-pill">📍 GPS not started</div>
-    <!-- Map controls -->
+    <!-- Map control buttons -->
     <div id="map-controls">
-      <button class="map-ctrl-btn" id="centre-btn" onclick="centreOnMe()" title="Centre on my location">📍</button>
-      <button class="map-ctrl-btn" id="follow-btn" onclick="toggleFollow()" title="Follow my position">🔒</button>
-      <button class="map-ctrl-btn" id="fit-route-btn" onclick="fitRoute()" title="Show full route">🗺</button>
+      <button class="map-ctrl-btn" id="btn-fullscreen" onclick="toggleMapFullscreen()" title="Fullscreen map">⛶</button>
+      <button class="map-ctrl-btn" id="btn-centre" onclick="centreOnUser()" title="Centre on my location">◎</button>
+      <button class="map-ctrl-btn" id="btn-fit-route" onclick="fitRoute()" title="Fit whole route">⊡</button>
     </div>
   </div>
 
@@ -831,15 +945,17 @@ body {
         <div class="nsb-unit">km</div>
       </div>
     </div>
-    <!-- Navigate to next stop button -->
-    <button id="nsb-navigate-btn" onclick="navigateTo(STATE.currentStop)" style="display:flex;align-items:center;justify-content:center;gap:8px;width:calc(100% - 32px);margin:8px 16px 0;padding:13px;background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.35);border-radius:var(--radius-sm);color:var(--blue);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(74,158,255,0.18)'" onmouseout="this.style.background='rgba(74,158,255,0.1)'">
-      🧭 Open Directions in Maps
-    </button>
+
+    <!-- Quick navigate buttons -->
+    <div class="nav-row">
+      <button class="btn-nav-maps google" onclick="openGoogleMaps()">🗺 Google Maps</button>
+      <button class="btn-nav-maps" onclick="centreOnNextStop()">📍 Show Stop</button>
+    </div>
 
     <!-- Progress -->
     <div id="progress-section">
       <div class="prog-header">
-        <span class="prog-title">Hidden London Explorer</span>
+        <span class="prog-title">Tour Progress</span>
         <span class="prog-count" id="prog-count">0 / 10</span>
       </div>
       <div class="prog-bar"><div class="prog-fill" id="prog-fill"></div></div>
@@ -871,7 +987,7 @@ body {
     <div id="achievements-list"></div>
   </div>
   <nav id="bottom-nav-a" class="bottom-nav-clone">
-    <style>#bottom-nav-a{position:fixed;bottom:0;left:0;right:0;height:calc(64px + var(--safe-bot));background:rgba(15,15,15,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;z-index:1000;}</style>
+    <style>#bottom-nav-a{position:fixed;bottom:0;left:0;right:0;height:calc(64px + var(--safe-bot));background:rgba(245,240,232,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;z-index:1000;}</style>
     <button class="nav-item" onclick="showNav('tour')"><span class="nav-icon">🗺</span>Tour</button>
     <button class="nav-item active" onclick="showNav('achievements')"><span class="nav-icon">🏅</span>Awards</button>
     <button class="nav-item" onclick="showNav('stats')"><span class="nav-icon">📊</span>Stats</button>
@@ -908,7 +1024,7 @@ body {
     </div>
   </div>
   <nav id="bottom-nav-s" class="bottom-nav-clone">
-    <style>#bottom-nav-s{position:fixed;bottom:0;left:0;right:0;height:calc(64px + var(--safe-bot));background:rgba(15,15,15,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;z-index:1000;}</style>
+    <style>#bottom-nav-s{position:fixed;bottom:0;left:0;right:0;height:calc(64px + var(--safe-bot));background:rgba(245,240,232,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;align-items:flex-start;padding-top:8px;z-index:1000;}</style>
     <button class="nav-item" onclick="showNav('tour')"><span class="nav-icon">🗺</span>Tour</button>
     <button class="nav-item" onclick="showNav('achievements')"><span class="nav-icon">🏅</span>Awards</button>
     <button class="nav-item active" onclick="showNav('stats')"><span class="nav-icon">📊</span>Stats</button>
@@ -1062,8 +1178,7 @@ const ACHIEVEMENTS = [
   { id: 'canal',   name: 'Canal Explorer',        emoji: '🌊', desc: 'Complete stops 1–3 along the canal route',      stops: [1,2,3] },
   { id: 'royal',   name: 'Royal London',           emoji: '👑', desc: 'Visit Regent\'s Park, Hyde Park & the Palace',  stops: [4,5,6] },
   { id: 'street',  name: 'Street Art Hunter',      emoji: '🎨', desc: 'Discover Leake Street Tunnel',                  stops: [7] },
-  { id: 'thames',  name: 'Thames Explorer',        emoji: '🌉', desc: 'Complete the riverside stops 8–10',             stops: [8,9,10] },
-  { id: 'hidden',  name: 'Hidden London Explorer', emoji: '🏆', desc: 'Complete all 10 stops on the tour',             stops: [1,2,3,4,5,6,7,8,9,10] }
+  { id: 'thames',  name: 'Thames Explorer',        emoji: '🌉', desc: 'Complete the riverside stops 8–10',             stops: [8,9,10] }
 ];
 
 // ─── App State ────────────────────────────────────────────────────
@@ -1107,7 +1222,7 @@ function initMap() {
   map = L.map('map', { zoomControl: false, attributionControl: false })
     .setView([51.514, -0.13], 13);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom: 19
   }).addTo(map);
 
@@ -1225,8 +1340,8 @@ function renderStops() {
           </div>` : ''}
           <div class="stop-actions">
             ${!visited ? `<button class="btn-action primary" onclick="markVisited(${i})">✓ Mark as Visited</button>` : `<button class="btn-action visited-btn" disabled>✓ Completed</button>`}
-            <button class="btn-action" onclick="flyToStop(${i})">🗺 Show on Map</button>
-            <button class="btn-navigate" onclick="navigateTo(${i})">🧭 Navigate</button>
+            <button class="btn-action" onclick="flyToStop(${i})">🗺 Map</button>
+            <button class="btn-action nav-btn" onclick="navigateToStop(${i})">🧭 Navigate</button>
           </div>
         </div>
       </div>
@@ -1267,86 +1382,6 @@ function flyToStop(i) {
     map.flyTo([stop.lat, stop.lng], 16, { duration: 1.5 });
     markers[i].openPopup();
   }, 100);
-}
-
-// ─── Navigate to stop ─────────────────────────────────────────────
-function navigateTo(i) {
-  const stop = STOPS[i];
-  const lat = stop.lat, lng = stop.lng;
-  const label = encodeURIComponent(stop.name);
-
-  // Try to open the best available maps app
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isAndroid = /Android/.test(navigator.userAgent);
-
-  if (isIOS) {
-    // Apple Maps with directions (cycling mode = 'b', walking = 'w', driving = 'd')
-    window.open(`maps://maps.apple.com/?daddr=${lat},${lng}&dirflg=b&q=${label}`, '_blank');
-  } else if (isAndroid) {
-    // Google Maps cycling directions
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=bicycling`, '_blank');
-  } else {
-    // Desktop: Google Maps
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=bicycling`, '_blank');
-  }
-}
-
-// ─── Map follow mode ──────────────────────────────────────────────
-let followMode = false;
-let directionLine = null;
-
-function toggleFollow() {
-  followMode = !followMode;
-  const btn = document.getElementById('follow-btn');
-  if (followMode) {
-    btn.classList.add('active');
-    btn.title = 'Stop following';
-    showToast('🔒 Map locked to your position');
-    if (STATE.userLat) map.setView([STATE.userLat, STATE.userLng], 16);
-  } else {
-    btn.classList.remove('active');
-    btn.title = 'Follow my position';
-    showToast('🔓 Map unlocked');
-  }
-}
-
-function centreOnMe() {
-  if (STATE.userLat === null) {
-    showToast('⚠ Start GPS first');
-    return;
-  }
-  map.flyTo([STATE.userLat, STATE.userLng], 16, { duration: 1 });
-}
-
-function fitRoute() {
-  if (routeLine) {
-    map.fitBounds(routeLine.getBounds(), { padding: [60, 60] });
-  }
-}
-
-// ─── Direction line to next stop ──────────────────────────────────
-function updateDirectionLine() {
-  if (STATE.userLat === null) return;
-  const i = STATE.currentStop;
-  if (i >= STOPS.length) { removeDirectionLine(); return; }
-  const stop = STOPS[i];
-
-  const points = [[STATE.userLat, STATE.userLng], [stop.lat, stop.lng]];
-
-  if (!directionLine) {
-    directionLine = L.polyline(points, {
-      color: '#4a9eff',
-      weight: 3,
-      opacity: 0.8,
-      dashArray: '8 6'
-    }).addTo(map);
-  } else {
-    directionLine.setLatLngs(points);
-  }
-}
-
-function removeDirectionLine() {
-  if (directionLine) { directionLine.remove(); directionLine = null; }
 }
 
 // ─── Audio ────────────────────────────────────────────────────────
@@ -1466,6 +1501,12 @@ function markVisited(i) {
   checkAchievements();
   updateNextStopBanner();
   updateStats();
+
+  // Redraw direction line to newly current stop
+  if (directionLine) {
+    map.removeLayer(directionLine);
+    directionLine = null;
+  }
   updateDirectionLine();
 
   showToast(`✓ ${STOPS[i].name} completed!`);
@@ -1489,8 +1530,6 @@ function updateNextStopBanner() {
     document.getElementById('nsb-name').textContent = 'Tour Complete!';
     document.getElementById('nsb-meta').textContent = 'All stops visited 🏆';
     document.getElementById('nsb-km').textContent = '—';
-    const navBtn = document.getElementById('nsb-navigate-btn');
-    if (navBtn) navBtn.style.display = 'none';
     return;
   }
   const stop = STOPS[i];
@@ -1572,19 +1611,19 @@ function onGPSUpdate(pos) {
     userMarker.setLatLng([lat, lng]);
   }
 
-  // Follow mode: keep map centred
-  if (followMode) {
-    map.setView([lat, lng], map.getZoom());
-  }
-
-  // Draw direction line to next stop
-  updateDirectionLine();
-
   const pill = document.getElementById('gps-pill');
-  pill.textContent = `📍 ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+  const nextStop = STOPS[STATE.currentStop];
+  if (nextStop) {
+    const d = haversine(lat, lng, nextStop.lat, nextStop.lng);
+    const distStr = d < 1000 ? `${Math.round(d)}m` : `${(d/1000).toFixed(1)}km`;
+    pill.textContent = `📍 ${distStr} to ${nextStop.name}`;
+  } else {
+    pill.textContent = `📍 GPS active`;
+  }
   pill.className = 'active';
 
   updateNextStopBanner();
+  updateDirectionLine();
 
   // Check proximity to stops
   STOPS.forEach((stop, i) => {
@@ -1786,6 +1825,97 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
 }
 
+// ─── Map Fullscreen ───────────────────────────────────────────────
+let mapFullscreen = false;
+
+function toggleMapFullscreen() {
+  mapFullscreen = !mapFullscreen;
+  const mapEl = document.getElementById('map');
+  const btn = document.getElementById('btn-fullscreen');
+  const content = document.getElementById('tour-content');
+  const fab = document.getElementById('gps-start-fab');
+  if (mapFullscreen) {
+    mapEl.classList.add('map-fullscreen');
+    content.style.display = 'none';
+    fab.style.display = 'none';
+    btn.textContent = '⊠';
+    btn.classList.add('active');
+  } else {
+    mapEl.classList.remove('map-fullscreen');
+    content.style.display = '';
+    fab.style.display = '';
+    btn.textContent = '⛶';
+    btn.classList.remove('active');
+  }
+  setTimeout(() => map && map.invalidateSize(), 360);
+}
+
+// ─── Centre on User ───────────────────────────────────────────────
+function centreOnUser() {
+  if (STATE.userLat !== null) {
+    map.setView([STATE.userLat, STATE.userLng], 16, { animate: true });
+    const btn = document.getElementById('btn-centre');
+    btn.classList.add('active');
+    setTimeout(() => btn.classList.remove('active'), 1200);
+  } else {
+    showToast('Start GPS first to centre on your location');
+    startGPS();
+  }
+}
+
+// ─── Fit whole route ──────────────────────────────────────────────
+function fitRoute() {
+  if (routeLine) {
+    map.fitBounds(routeLine.getBounds(), { padding: [60, 60], animate: true });
+  }
+}
+
+// ─── Centre on next unvisited stop ────────────────────────────────
+function centreOnNextStop() {
+  const stop = STOPS[STATE.currentStop];
+  if (stop) {
+    map.setView([stop.lat, stop.lng], 16, { animate: true });
+    if (markers[STATE.currentStop]) {
+      setTimeout(() => markers[STATE.currentStop].openPopup(), 400);
+    }
+  }
+}
+
+// ─── Navigate to a specific stop ─────────────────────────────────
+function navigateToStop(i) {
+  const stop = STOPS[i];
+  window.open(`https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=bicycling`, '_blank');
+}
+
+// ─── Quick navigate button (next stop) ───────────────────────────
+function openGoogleMaps() {
+  const stop = STOPS[STATE.currentStop];
+  if (!stop) { showToast('Tour complete!'); return; }
+  const origin = STATE.userLat !== null ? `&origin=${STATE.userLat},${STATE.userLng}` : '';
+  window.open(`https://www.google.com/maps/dir/?api=1${origin}&destination=${stop.lat},${stop.lng}&travelmode=bicycling`, '_blank');
+}
+
+// ─── Draw line from user to next stop ────────────────────────────
+let directionLine = null;
+
+function updateDirectionLine() {
+  if (STATE.userLat === null) return;
+  const stop = STOPS[STATE.currentStop];
+  if (!stop) return;
+
+  const pts = [[STATE.userLat, STATE.userLng], [stop.lat, stop.lng]];
+  if (directionLine) {
+    directionLine.setLatLngs(pts);
+  } else {
+    directionLine = L.polyline(pts, {
+      color: '#4a9eff',
+      weight: 2,
+      opacity: 0.6,
+      dashArray: '5 8'
+    }).addTo(map);
+  }
+}
+
 // ─── Utilities ───────────────────────────────────────────────────
 function haversine(lat1, lng1, lat2, lng2) {
   const R = 6371000;
@@ -1812,6 +1942,74 @@ function installApp() {
 // ─── Service Worker ───────────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
+// ─── Intro Audio ──────────────────────────────────────────────────
+let introAudio = null;
+
+function toggleIntroAudio() {
+  const btn = document.getElementById('intro-play-btn');
+
+  if (!introAudio) {
+    introAudio = new Audio('audio/intro.mp3');
+
+    introAudio.addEventListener('timeupdate', () => {
+      if (!introAudio.duration) return;
+      const pct = (introAudio.currentTime / introAudio.duration) * 100;
+      document.getElementById('intro-prog-fill').style.width = pct + '%';
+      const t = Math.floor(introAudio.currentTime);
+      const m = Math.floor(t / 60);
+      const s = String(t % 60).padStart(2, '0');
+      document.getElementById('intro-audio-time').textContent = `${m}:${s}`;
+    });
+
+    introAudio.addEventListener('ended', () => {
+      btn.textContent = '▶';
+      document.getElementById('intro-prog-fill').style.width = '0%';
+      document.getElementById('intro-audio-time').textContent = '0:00';
+    });
+
+    introAudio.addEventListener('error', () => {
+      // Fall back to speech synthesis intro
+      introAudio = null;
+      speakIntro();
+    });
+  }
+
+  if (introAudio && !introAudio.paused) {
+    introAudio.pause();
+    btn.textContent = '▶';
+  } else if (introAudio) {
+    introAudio.play().then(() => {
+      btn.textContent = '⏸';
+    }).catch(() => {
+      introAudio = null;
+      speakIntro();
+    });
+  }
+}
+
+function seekIntroAudio(e) {
+  if (!introAudio || !introAudio.duration) return;
+  const rect = document.getElementById('intro-prog-wrap').getBoundingClientRect();
+  const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  introAudio.currentTime = pct * introAudio.duration;
+}
+
+function speakIntro() {
+  if (!('speechSynthesis' in window)) return;
+  const btn = document.getElementById('intro-play-btn');
+  const text = `Welcome to Cycle London with Jonah. This audio guide will take you on a self-guided cycling tour through ten of London's most extraordinary hidden places. From the tranquil waterways of Little Venice to the Victorian engineering of Tower Bridge, you'll discover stories that most Londoners have never heard. When you're ready, press Begin Tour to start your adventure.`;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 0.92; utter.pitch = 1; utter.lang = 'en-GB';
+  const voices = speechSynthesis.getVoices();
+  const nice = voices.find(v => v.lang === 'en-GB' && v.name.includes('Daniel'))
+    || voices.find(v => v.lang === 'en-GB')
+    || voices.find(v => v.lang.startsWith('en'));
+  if (nice) utter.voice = nice;
+  utter.onend = () => { btn.textContent = '▶'; };
+  btn.textContent = '⏸';
+  speechSynthesis.speak(utter);
 }
 
 // ─── Boot ─────────────────────────────────────────────────────────

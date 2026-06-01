@@ -18,6 +18,7 @@ const PRECACHE_ASSETS = [
 
 // Audio files — cached on first play (network-first, then cache)
 const AUDIO_FILES = [
+  './audio/intro.mp3',
   './audio/stop01.mp3', './audio/stop02.mp3', './audio/stop03.mp3',
   './audio/stop04.mp3', './audio/stop05.mp3', './audio/stop06.mp3',
   './audio/stop07.mp3', './audio/stop08.mp3', './audio/stop09.mp3',
