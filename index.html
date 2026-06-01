@@ -1390,7 +1390,7 @@ const speechActive = {};
 
 function playAudio(i) {
   const btn = document.getElementById(`play-btn-${i}`);
-  const file = `audio/stop${String(i+1).padStart(2,'0')}.mp3`;
+  const file = `audio/stop-${i+1}.mp3`;
 
   // If speech is active for this stop
   if (speechActive[i]) {

@@ -19,10 +19,10 @@ const PRECACHE_ASSETS = [
 // Audio files — cached on first play (network-first, then cache)
 const AUDIO_FILES = [
   './audio/intro.mp3',
-  './audio/stop01.mp3', './audio/stop02.mp3', './audio/stop03.mp3',
-  './audio/stop04.mp3', './audio/stop05.mp3', './audio/stop06.mp3',
-  './audio/stop07.mp3', './audio/stop08.mp3', './audio/stop09.mp3',
-  './audio/stop10.mp3'
+  './audio/stop-1.mp3', './audio/stop-2.mp3', './audio/stop-3.mp3',
+  './audio/stop-4.mp3', './audio/stop-5.mp3', './audio/stop-6.mp3',
+  './audio/stop-7.mp3', './audio/stop-8.mp3', './audio/stop-9.mp3',
+  './audio/stop-10.mp3'
 ];
 
 // ─── Install: pre-cache core assets ──────────────────────────────
